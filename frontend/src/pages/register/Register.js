@@ -6,7 +6,7 @@ export const Register = () => {
           <div className="top">
               <div className="wrapper">
                   {/*<img src="https://i.amediateka.tech/trim/%7BSIZE%7D/_stor_/cms/assets-dummyasset/f/71/93b885adfe0da089cdf634904fd59f71-1-d77d60a8c40e47ff929b03a5941b993f.png" alt=""/>*/}
-                  <img src="https://thumb.tildacdn.com/tild6434-3264-4234-b565-313638626430/-/resize/560x/-/format/webp/photo.png" alt="logo" className="logo"/>
+                  <img src="https://www.amediateka.ru/static/images/logos/logo-full.svg" alt="logo" className="logo"/>
                   <span className='title'>Регистрация</span>
                   <span className='title2'>Зарегистрируйтесь для просмотра сотни фильмов и сериалов</span>
                   <div className="input">

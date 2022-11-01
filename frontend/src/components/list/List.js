@@ -14,19 +14,19 @@ export const List = () => {
 
         if(direction === 'left' && isSlider > 0) {
             setIsSlider(isSlider - 1)
-            ref.current.style.transform = `translateX(${270 + dist}px)`
+            ref.current.style.transform = `translateX(${280 + dist}px)`
         }
 
         if(direction === 'right' && isSlider < 5) {
             setIsSlider(isSlider + 1)
-            ref.current.style.transform = `translateX(${-270 + dist}px)`
+            ref.current.style.transform = `translateX(${-280 + dist}px)`
         }
     };
 
   return (
       <div className='list'>
           <span className='listTitle'>
-              Сейчас смотрят
+              Вам также понравится
           </span>
           <div className="wrapper">
                 <ArrowBackIosNewIcon

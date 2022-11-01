@@ -67,6 +67,11 @@
         line-height: 22px;
         color: #565c67;
         text-align: center;
+        cursor: pointer;
+        transition: all 1s ease-in-out;
+        &:hover {
+          color: white;
+        }
       }
 
         .but {
@@ -79,6 +84,12 @@
           opacity: .9;
           font-size: 16px;
           color: black;
+          transition: all 1s linear;
+          &:hover {
+            color: white;
+            background-color: var(--main-color);
+            border: none;
+          }
         }
 
       .net {

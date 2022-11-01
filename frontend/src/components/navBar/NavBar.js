@@ -15,12 +15,11 @@ export const NavBar = () => {
       <div className= {scrolled ? 'navbar scroll':'navbar'}>
           <div className="container">
               <div className="left">
-                  <img src="https://thumb.tildacdn.com/tild6434-3264-4234-b565-313638626430/-/resize/560x/-/format/webp/photo.png" alt=''/>
-                  <span>HomePage</span>
-                  <span>Series</span>
-                  <span>Movies</span>
-                  <span>New and Popular</span>
-                  <span>My List</span>
+                  <img src="https://www.amediateka.ru/static/images/logos/logo-full.svg" alt=''/>
+                  <span>Сериалы</span>
+                  <span>Фильмы</span>
+                  <span>Коллекции</span>
+                  <span>Новинки</span>
               </div>
               <div className="right">
                   <SearchIcon className='icons'/>

@@ -1,0 +1,158 @@
+.filmMain {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: var(--main-color);
+  overflow: hidden;
+
+  //.filmInfo {
+  //  display: flex;
+  //  flex-direction: row;
+  //  align-items: inherit;
+  //  justify-content: start;
+  //  margin: 20px 15px;
+  //  box-sizing: border-box;
+  //  font-family: proximaNovaRegular,sans-serif;
+  //  color: white;
+  //  .trailer {
+  //    width: 50%;
+  //    height: 50%;
+  //
+  //    video {
+  //      width: 900px;
+  //      height: 400px;
+  //    }
+  //  }
+  //
+  //  span {
+  //    margin-bottom: 15px;
+  //    line-height: 25px;
+  //    font-weight: lighter;
+  //    font-size: 20px;
+  //  }
+  //
+  //  .text {
+  //    display: flex;
+  //    flex-direction: column;
+  //    justify-content: center;
+  //    align-items: center;
+  //
+  //    .description {
+  //      width: 50%;
+  //      height: 100px;
+  //      margin-left: 30px;
+  //    }
+  //    .p{
+  //      display: flex;
+  //      flex-direction: row;
+  //      justify-content: center;
+  //      align-items: center;
+  //      align-content: center;
+  //      margin-top: 10%;
+  //
+  //      .crew {
+  //        color: #565c67;
+  //        display: flex;
+  //        flex-direction: column;
+  //        justify-content: center;
+  //        align-items: center;
+  //        margin-right: 3%;
+  //      }
+  //      .people {
+  //        display: flex;
+  //        flex-direction: column;
+  //        justify-content: center;
+  //        align-items: start;
+  //        width: 400px;
+  //        padding-top: 25px;
+  //        margin-left: 10px;
+  //        padding-bottom: 20px;
+  //      }
+  //    }
+  //  }
+  //}
+
+  .filmInfo {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    .trailer {
+      width: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-right: 15%;
+      color: white;
+      span {
+        margin-bottom: 15px;;
+        font-weight: lighter;
+        font-size: 24px;
+        line-height: 24px;
+        font-family: circeLight,sans-serif;
+      }
+      video {
+        width: 100%;
+        border-radius: 40px;
+      }
+    }
+    .textInfo {
+      width: 500px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      color: white;
+      .text {
+        .desc {
+          span {
+            margin-bottom: 15px;
+            line-height: 25px;
+            font-weight: lighter;
+            font-size: 20px;
+          }
+        }
+        .p {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          margin-top: 20px;
+          span {
+                margin-bottom: 15px;
+                line-height: 25px;
+                font-weight: lighter;
+                font-size: 20px;
+              }
+          .crew {
+            display: flex;
+            flex-direction: column;
+          }
+          .people {
+            display: flex;
+            flex-direction: column;
+          }
+        }
+      }
+    }
+  }
+
+  .video {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+
+    video {
+      width: 80%;
+      height: 80%;
+    }
+  }
+
+}
