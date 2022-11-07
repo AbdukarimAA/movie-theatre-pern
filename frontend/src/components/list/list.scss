@@ -16,12 +16,11 @@
       height: 100%;
       color: #ffffff;
       position: absolute;
-      z-index: 22;
       top: 0;
       bottom: 0;
       margin: auto;
       cursor: pointer;
-
+      z-index: 222;
       &.left {
         left: 0;
       }

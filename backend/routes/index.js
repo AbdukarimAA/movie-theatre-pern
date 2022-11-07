@@ -7,9 +7,9 @@ const movieRouter = require('./movie.router')
 
 
 router.use('/user', userRouter)
-router.use('/movie', movieRouter)
-router.use('/actor', actorRouter)
-router.use('/filmCompany', filmCompanyRouter)
+// router.use('/movie', movieRouter)
+// router.use('/actor', actorRouter)
+// router.use('/filmCompany', filmCompanyRouter)
 
 
 module.exports = router;

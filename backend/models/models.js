@@ -3,9 +3,11 @@ const {DataTypes} = require('sequelize');
 
 const User = sequelize.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    login: {type: DataTypes.STRING, unique: true},
-    password: {type: DataTypes.STRING},
-    name: {type: DataTypes.STRING, defaultValue: 'User'},
+    username: {type: DataTypes.STRING, unique: true, required: true},
+    // email: {type: DataTypes.STRING, unique: true, required: true},
+    password: {type: DataTypes.STRING, required: true},
+    ProfilePic: {type: DataTypes.BOOLEAN, default: ''},
+    IsAdmin: {type: DataTypes.BOOLEAN, default: false},
 });
 
 const Comment = sequelize.define('comment', {
@@ -15,8 +17,17 @@ const Comment = sequelize.define('comment', {
 
 const Movie = sequelize.define('movie', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, unique: true, allowNull: false},
+    title: {type: DataTypes.STRING, unique: true, allowNull: false, required: true},
+    desc: {type: DataTypes.STRING, unique: true, allowNull: false},
     img: {type: DataTypes.STRING, allowNull: false},
+    imgTitle: {type: DataTypes.STRING, allowNull: false},
+    imgSmall: {type: DataTypes.STRING, allowNull: false},
+    trailer: {type: DataTypes.STRING, allowNull: false},
+    video: {type: DataTypes.STRING, allowNull: false},
+    year: {type: DataTypes.STRING, allowNull: false},
+    limit: {type: DataTypes.INTEGER, allowNull: false},
+    genres: {type: DataTypes.STRING, allowNull: false},
+    isSeries: {type: DataTypes.BOOLEAN, allowNull: false},
     ratings: {type: DataTypes.INTEGER, defaultValue: 0},
     // actors: {type: DataTypes.STRING, defaultValue: 0}
 });
@@ -29,6 +40,8 @@ const Rating = sequelize.define('rating', {
 const Genre = sequelize.define('genre', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, allowNull: false}
+}, {
+    timestamps: false
 });
 
 const FilmCompany = sequelize.define('film_company', {
@@ -41,7 +54,14 @@ const MovieInfo = sequelize.define('movie_info', {
     title: {type: DataTypes.STRING, unique: true, allowNull: false},
     description: {type: DataTypes.STRING, allowNull: false},
     quality: {type: DataTypes.STRING, defaultValue: 'FHD'},
-    // actors: {type: DataTypes.ARRAY, defaultValue: 0}
+    // content: {
+    //     type: Sequelize.ARRAY(Sequelize),
+    //     defaultValue: []
+    // },
+    // actors1: {
+    //     type: Sequelize.ARRAY(Sequelize),
+    //     defaultValue: [],
+    // }
 });
 
 const Actor = sequelize.define('actor', {
