@@ -2,17 +2,16 @@ require('dotenv').config();
 const express = require('express');
 const sequelize = require('./db');
 const models = require('./models/models');
-const router = require('./routes/index')
 const cors = require('cors')
+const verify = require('./middleware/verifyTokenMiddleware');
 
-//29-00
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use('/api/user', require('./user/router'));
-
+app.use('/api/auth', require('./routes/auth.router'));
+app.use('/api/user', require('./routes/user.router'));
 
 const start = async () => {
   try{

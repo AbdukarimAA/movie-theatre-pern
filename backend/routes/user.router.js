@@ -1,11 +1,9 @@
 const router = require('express').Router();
-const { login, registration } = require('../controllers/user.controllers')
-const {verify} = require('../verifyToken');
+const {update, remove} = require('../controllers/user.controller');
+const verify = require('../middleware/verifyTokenMiddleware');
+const tok = require('../middleware/verify');
 
-router.post('/registration', registration);
-router.post('/login', login)
-// router.post('/login', userController.login);
- // router.put('/:id', verify, userController.update);
-
+router.put('/:id', tok, update);
+router.delete('/delete/:id', tok, remove);
 
 module.exports = router;
