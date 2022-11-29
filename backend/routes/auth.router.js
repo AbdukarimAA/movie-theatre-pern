@@ -4,7 +4,7 @@ const verify = require('../middleware/verifyTokenMiddleware');
 
 
 router.post('/registration', registration);
-router.post('/login', login)
+router.post('/login', verify, login)
 router.get('/check', verify, authCheck)
 
 

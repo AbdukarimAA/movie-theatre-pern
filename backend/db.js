@@ -1,6 +1,5 @@
 const {Sequelize} = require('sequelize');
 
-const add = 0;
 
 module.exports = new Sequelize(
     process.env.DB_NAME,

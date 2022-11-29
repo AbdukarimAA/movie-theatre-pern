@@ -9,7 +9,7 @@ import {FilmPage} from "./pages/filmPage/FilmPage";
 function App() {
   return (
     <Routes>
-        <Route path='/' element={<FilmPage/>}/>
+        <Route path='/' element={<Register/>}/>
     </Routes>
   );
 }

@@ -19,7 +19,7 @@ class AuthController {
         // }catch (err){
         //     res.status(500).json(err)
         // }
-        const {username, email, password} = req.body
+        const {username, email, IsAdmin, ProfilePic, password} = req.body
         if (!email || !password) {
             console.log('err')
         }
@@ -28,14 +28,14 @@ class AuthController {
             console.log('err')
         }
         const hashPassword = await bcrypt.hash(password, 5)
-        const user = await User.create({username, email, password: hashPassword})
+        const user = await User.create({username, email, IsAdmin, ProfilePic, password: hashPassword})
         await user.save();
         const aToken = await jwt.sign(
-            { id: user.id, username: user.username, email: user.email, isAdmin: user.isAdmin },
+            { id: user.id, username: user.username, email: user.email, isAdmin: user.IsAdmin, profilePic: user.ProfilePic },
             process.env.SECRET_KEY,
             { expiresIn: '24h' }
         )
-        return res.json({user, aToken})
+        return res.json(aToken)
     };
 
     async login(req, res) {

@@ -6,8 +6,8 @@ const User = sequelize.define('user', {
     username: {type: DataTypes.STRING, unique: true},
     email: {type: DataTypes.STRING, unique: true},
     password: {type: DataTypes.STRING},
-    ProfilePic: {type: DataTypes.BOOLEAN, default: ''},
-    IsAdmin: {type: DataTypes.BOOLEAN, default: false},
+    ProfilePic: {type: DataTypes.STRING},
+    IsAdmin: {type: DataTypes.BOOLEAN, defaultValue: false},
 });
 
 const Comment = sequelize.define('comment', {
@@ -49,11 +49,27 @@ const FilmCompany = sequelize.define('film_company', {
     name: {type: DataTypes.STRING, allowNull: false}
 });
 
+const ListInfo = sequelize.define('list_info', {
+    title: { type: DataTypes.STRING, required: true, unique: true },
+    type: { type: DataTypes.STRING },
+    genre: { type: DataTypes.STRING },
+    content:{type: DataTypes.ARRAY(DataTypes.STRING)}
+});
+
 const MovieInfo = sequelize.define('movie_info', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     title: {type: DataTypes.STRING, unique: true, allowNull: false},
     description: {type: DataTypes.STRING, allowNull: false},
     quality: {type: DataTypes.STRING, defaultValue: 'FHD'},
+    // trailer: {type: DataTypes.STRING, allowNull: false},
+    // video: {type: DataTypes.STRING, allowNull: false},
+    // producer: {type: DataTypes.STRING, allowNull: false},
+    // actors:{type: DataTypes.ARRAY(DataTypes.STRING)},
+    // country:{type: DataTypes.STRING, allowNull: false},
+    // year:{type: DataTypes.STRING, allowNull: false},
+    // genre:{type: DataTypes.STRING, allowNull: false},
+    // ageRestriction:{type: DataTypes.STRING, allowNull: false},
+    // imdbRatings:{type: DataTypes.ARRAY(DataTypes.STRING)}
     // content: {
     //     type: Sequelize.ARRAY(Sequelize),
     //     defaultValue: []
@@ -67,7 +83,7 @@ const MovieInfo = sequelize.define('movie_info', {
 const Actor = sequelize.define('actor', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, allowNull: false},
-    actorInfo: {type: DataTypes.STRING, unique: true, allowNull: false}
+    actorInfo: {type: DataTypes.ARRAY(DataTypes.STRING)}
 });
 
 const TypeMovieInfo = sequelize.define('type_movie_info', {
@@ -94,6 +110,9 @@ Movie.belongsTo(FilmCompany);
 
 Movie.hasMany(MovieInfo);
 MovieInfo.belongsTo(Movie);
+
+// ListInfo.hasMany(Movie);
+// Movie.belongsTo(ListInfo);
 
 MovieInfo.belongsToMany(Actor, {through: TypeMovieInfo});
 Actor.belongsToMany(MovieInfo, {through: TypeMovieInfo});

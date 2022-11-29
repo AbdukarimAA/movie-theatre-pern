@@ -2,7 +2,7 @@ import './login.scss';
 
 export const Login = () => {
     return(
-        <div className='login'>
+        <div className='login' style={{background: 'url(https://i.amediateka.tech/trim/%7BSIZE%7D/_stor_/cms/assets-dummyasset/f/71/93b885adfe0da089cdf634904fd59f71-1-d77d60a8c40e47ff929b03a5941b993f.png)'}}>
             <div className="top">
                 <div className="wrapper">
                     {/*<img src="https://i.amediateka.tech/trim/%7BSIZE%7D/_stor_/cms/assets-dummyasset/f/71/93b885adfe0da089cdf634904fd59f71-1-d77d60a8c40e47ff929b03a5941b993f.png" alt=""/>*/}

@@ -15,7 +15,7 @@ export const MainSlider = () => {
         return (
             <div
                 className={className}
-                style={{ ...style, display: "block", background: "none", width: "50"}}
+                style={{ ...style, display: "block", width: "50"}}
                 onClick={onClick}
             />
         );
@@ -26,7 +26,7 @@ export const MainSlider = () => {
         return (
             <div
                 className={className}
-                style={{ ...style, display: "block", background: "none" }}
+                style={{ ...style, display: "block" }}
                 onClick={onClick}
             />
         );

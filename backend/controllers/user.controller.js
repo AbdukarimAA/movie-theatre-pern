@@ -6,7 +6,7 @@ class UserController {
     async update(req, res) {
             try {
                 const { id } = req.params;
-                const { username, email } = req.body;
+                const { username, email, IsAdmin, ProfilePic } = req.body;
                 const findPersonById = await User.findOne({
                     where: {
                         id: req.params.id
@@ -20,6 +20,8 @@ class UserController {
                 }
                 if (username) findPersonById.username = username;
                 if (email) findPersonById.email = email;
+                if (IsAdmin) findPersonById.IsAdmin = IsAdmin;
+                if (ProfilePic) findPersonById.ProfilePic = ProfilePic;
 
                 const update = await findPersonById.update(req.body, {
                     where: {
@@ -150,13 +152,18 @@ class UserController {
 
     async getAllUsers(req, res) {
         let users = await User.findAll({})
-        res.status(200).send(users)
+        res.status(200).send({users})
     }
 
     async getOneUser(req, res) {
         let id = req.params.id
         let user = await User.findOne({ where: { id: id }})
-        res.status(200).send(user)
+        const aToken = await jwt.sign(
+            { id: user.id, username: user.username, email: user.email, isAdmin: user.IsAdmin, profilePic: user.ProfilePic },
+            process.env.SECRET_KEY,
+            { expiresIn: '24h' }
+        )
+        res.status(200).send({user, aToken})
     }
 
     async changePassword(req, res) {
