@@ -21,11 +21,11 @@ class AuthController {
         // }
         const {username, email, IsAdmin, ProfilePic, password} = req.body
         if (!email || !password) {
-            console.log('err')
+            return res.status(500).json({message: 'Enter email or password'})
         }
         const candidate = await User.findOne({where: {email: email} })
         if (candidate) {
-            console.log('err')
+            return res.status(500).json({message: 'user already exists'})
         }
         const hashPassword = await bcrypt.hash(password, 5)
         const user = await User.create({username, email, IsAdmin, ProfilePic, password: hashPassword})
@@ -64,7 +64,7 @@ class AuthController {
         }
         let comparePassword = bcrypt.compareSync(password, user.password)
         if (!comparePassword) {
-            console.log('err')
+            return res.status(500).json({message: 'password is incorrect'})
         }
         const aToken = await jwt.sign(
             { id: user.id, username: user.username, email: user.email, isAdmin: user.isAdmin },

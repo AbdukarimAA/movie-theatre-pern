@@ -13,34 +13,35 @@ class UserController {
                     }
                 });
                 if (!findPersonById) {
-                    res.status(404).send({
+                    return res.status(404).send({
                         status: 'error',
                         message: `Person with id ${id} not found`
                     });
                 }
-                if (username) findPersonById.username = username;
-                if (email) findPersonById.email = email;
-                if (IsAdmin) findPersonById.IsAdmin = IsAdmin;
-                if (ProfilePic) findPersonById.ProfilePic = ProfilePic;
+                // if (username) findPersonById.username = username;
+                // if (email) findPersonById.email = email;
+                // if (IsAdmin) findPersonById.IsAdmin = IsAdmin;
+                // if (ProfilePic) findPersonById.ProfilePic = ProfilePic;
 
                 const update = await findPersonById.update(req.body, {
                     where: {
-                        id: req.params.id
+                        id: req.params.id,
+
                     }
                 })
                 const updatePerson = await update.save();
                 if (!updatePerson) {
-                    res.status(400).send({
+                    return res.status(400).send({
                         status: 'error',
                         message: `data person with id ${id} failed update`
                     });
                 }
-                res.status(200).send({
+                return res.status(200).send({
                     status: 'success',
                     data: updatePerson
                 });
             } catch (err) {
-                res.status(500).json(err, 'something went wrong')
+                return res.status(500).json(err, 'something went wrong')
             }
             /*
             try {

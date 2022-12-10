@@ -1,18 +1,18 @@
-const {Actor} = require('../models/models')
+const {Actor, Movie} = require('../models/models')
 
 class ActorController {
     async create(req, res) {
         if(req.user.isAdmin) {
-            const {name, actorInfo} = req.body;
+            const {name} = req.body;
             try {
-                const actor = await Actor.create({name, actorInfo});
+                const actor = await Actor.create({name});
                 await actor.save();
                 return res.json(actor)
             } catch (e) {
-                console.log(e)
+                return res.status(500).json(e, 'you are not allowed')
             }
         } else {
-            res.status(500).json('you are not allowed!')
+            return res.status(500).json('you are not allowed!')
         }
     }
 
@@ -20,7 +20,7 @@ class ActorController {
         try {
             if(req.user.isAdmin) {
                 const { id } = req.params;
-                const { name, actorInfo } = req.body;
+                const { name} = req.body;
                 const findActorById = await Actor.findOne({
                     where: {
                         id: req.params.id
@@ -32,8 +32,8 @@ class ActorController {
                         message: `Actor with id ${id} not found`
                     });
                 }
-                if (name) findActorById.name = name;
-                if (actorInfo) findActorById.actorInfo = actorInfo;
+                // if (name) findActorById.name = name;
+                // if (actorInfo) findActorById.actorInfo = actorInfo;
 
                 const update = await findActorById.update(req.body, {
                     where: {
@@ -60,13 +60,18 @@ class ActorController {
     }
 
     async getAll(req, res) {
-        const actors = await Actor.findAll()
+        let {movieId} = req.query
+        // let actors;
+        // if(movieId) {
+        //     actors = await Actor.findAndCountAll({where: {id}, include: Movie})
+        // }
+        const actors = await Actor.findAll({include: Movie})
         return res.json(actors)
     }
 
     async getOne(req, res) {
         let id = req.params.id
-        let actor = await Actor.findOne({ where: { id: id }})
+        let actor = await Actor.findOne({ where: { id: id }, include: Movie})
         res.status(200).send(actor)
     }
 
