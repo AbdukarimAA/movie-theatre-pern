@@ -1,10 +1,10 @@
-const {Comment, Actor} = require('../models/models')
+const {Comment} = require('../models/models')
 
 class CommentController {
     async create(req, res) {
         try {
-            const {comment} = req.body;
-            const comm = await Comment.create({comment}); //userId movieId ПЕРЕДАТЬ
+            const {comment, userId, movieId} = req.body;
+            const comm = await Comment.create({comment, userId, movieId}); //userId movieId ПЕРЕДАТЬ
             await comm.save();
             return res.json(comm)
         }catch (e) {

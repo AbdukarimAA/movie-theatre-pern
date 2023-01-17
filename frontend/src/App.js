@@ -5,11 +5,12 @@ import {Player} from "./pages/player/Player";
 import {Register} from "./pages/register/Register";
 import {Login} from "./pages/login/Login";
 import {FilmPage} from "./pages/filmPage/FilmPage";
+
 //29-44
 function App() {
   return (
     <Routes>
-        <Route path='/' element={<Register/>}/>
+        <Route path='/' element={<MainPage/>}/>
     </Routes>
   );
 }

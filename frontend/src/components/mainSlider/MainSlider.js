@@ -53,6 +53,12 @@ export const MainSlider = () => {
                 <div className="card">
                     <img src="http://avatars.mds.yandex.net/get-ott/1652588/2a0000016fb27b97beee97f93c92540dd577/orig"className='img' alt="AVA"/>
                 </div>
+                <div className="card">
+                    <img src="http://avatars.mds.yandex.net/get-ott/1652588/2a0000016fb27b97beee97f93c92540dd577/orig"className='img' alt="AVA"/>
+                    <span className='description'>
+                  Star Wars: Episode III - Revenge of the Sith
+            </span>
+                </div>
             </Slider>
             <div className="info">
                 <img className='im' src='https://i.amediateka.tech/trim/640x320/_stor_/cms/content-contentasset/d/c9/ca5d14f1728f86b5810a2afe682ecdc9-123178-7fbeae28ff3b40df8831a459dae7e0e3.png' alt="AVA"/>

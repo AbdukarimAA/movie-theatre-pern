@@ -7,12 +7,12 @@ class FilmCompanyController {
                 const {name} = req.body;
                 const company = await FilmCompany.create({name})
                 await company.save();
-                res.json(company)
+                return res.json(company)
             }catch (e) {
-                res.json({message: "Error", e})
+                return res.json({message: "Error", e})
             }
         } else {
-            res.status(400).json({message: "You are not authorized"})
+            return res.status(400).json({message: "You are not authorized"})
         }
     }
 

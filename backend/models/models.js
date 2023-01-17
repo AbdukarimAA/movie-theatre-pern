@@ -19,6 +19,8 @@ const Movie = sequelize.define('movie', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     title: {type: DataTypes.STRING, unique: true, allowNull: false, required: true},
     desc: {type: DataTypes.STRING, unique: true, allowNull: false},
+    director: {type: DataTypes.STRING, allowNull: false},
+    country: {type: DataTypes.STRING, allowNull: false},
     img: {type: DataTypes.STRING, allowNull: false},
     imgTitle: {type: DataTypes.STRING, allowNull: false},
     imgSmall: {type: DataTypes.STRING, allowNull: false},
@@ -29,7 +31,6 @@ const Movie = sequelize.define('movie', {
     genres: {type: DataTypes.STRING, allowNull: false},
     isSeries: {type: DataTypes.BOOLEAN, allowNull: false},
     ratings: {type: DataTypes.INTEGER, defaultValue: 0},
-    // actors: {type: DataTypes.STRING, defaultValue: 0}
 });
 
 const Rating = sequelize.define('rating', {
@@ -83,7 +84,7 @@ const MovieInfo = sequelize.define('movie_info', {
 const Actor = sequelize.define('actor', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, allowNull: false},
-    actorInfo: {type: DataTypes.ARRAY(DataTypes.STRING)}
+    // actorInfo: {type: DataTypes.ARRAY(DataTypes.STRING)}
 });
 
 const TypeMovieInfo = sequelize.define('type_movie_info', {
@@ -102,8 +103,8 @@ Comment.belongsTo(User);
 Movie.hasMany(Comment);
 Comment.belongsTo(Movie);
 
-Movie.hasOne(Genre);
-Genre.belongsTo(Movie);
+Genre.hasMany(Movie);
+Movie.belongsTo(Genre);
 
 FilmCompany.hasMany(Movie);
 Movie.belongsTo(FilmCompany);
@@ -114,8 +115,8 @@ MovieInfo.belongsTo(Movie);
 // ListInfo.hasMany(Movie);
 // Movie.belongsTo(ListInfo);
 
-MovieInfo.belongsToMany(Actor, {through: TypeMovieInfo});
-Actor.belongsToMany(MovieInfo, {through: TypeMovieInfo});
+Movie.belongsToMany(Actor, {through: TypeMovieInfo});
+Actor.belongsToMany(Movie, {through: TypeMovieInfo});
 
 module.exports = {
     User,
