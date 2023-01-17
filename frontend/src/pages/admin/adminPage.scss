@@ -1,0 +1,71 @@
+.admin {
+  width: 100vw;
+  height: 100vh;
+  background: url("https://i.amediateka.tech/trim/%7BSIZE%7D/_stor_/cms/assets-dummyasset/f/71/93b885adfe0da089cdf634904fd59f71-1-d77d60a8c40e47ff929b03a5941b993f.png")!important;
+  overflow: hidden;
+  position: relative;
+  color: burlywood;
+
+  span {
+    position: absolute;
+    left: 47%;
+    top: 30px;
+    font-size: large;
+    font-weight: bold;
+  }
+  .admin-modal {
+    position: absolute;
+    left: 5%;
+    top: 10%;
+    width: 50%;
+    height: 490px;
+    border-radius: 30px ;
+    color: #ffffff;
+    .admin-input {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+      .admin-input-value {
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        border-radius: 20px;
+        margin-top: 30px;
+        padding: 10px;
+      }
+      //.radio {
+      //  display: flex;
+      //  flex-direction: row;
+      //}
+    }
+  }
+
+  .files {
+    position: absolute;
+    right: -15%;
+    top: 10%;
+    width: 50%;
+    height: 80%;
+    border-radius: 30px ;
+    color: #ffffff;
+
+    .file-input {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+
+      #file-uploader {
+        display: flex;
+        flex-direction: row;
+        width: 80%;
+        border-radius: 20px;
+        margin-top: 30px;
+        padding: 10px;
+      }
+    }
+  }
+}
