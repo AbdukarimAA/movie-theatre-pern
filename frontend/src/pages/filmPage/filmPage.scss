@@ -111,6 +111,7 @@
       color: white;
       .text {
         .desc {
+          margin-top: 70px;
           span {
             margin-bottom: 15px;
             line-height: 25px;
@@ -124,18 +125,14 @@
           justify-content: space-between;
           margin-top: 20px;
           span {
-                margin-bottom: 15px;
-                line-height: 25px;
-                font-weight: lighter;
-                font-size: 20px;
-              }
-          .crew {
-            display: flex;
-            flex-direction: column;
+            line-height: 25px;
+            font-weight: lighter;
+            font-size: 20px;
           }
           .people {
             display: flex;
             flex-direction: column;
+
           }
         }
       }

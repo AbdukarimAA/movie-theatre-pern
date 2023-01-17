@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
         req.user = decoded //Создаем любое поле, куда сохраняем токен.
         next()
     } catch (e) {
-        res.status(400).json('token is not valid')
+        res.status(400).json({message: 'token is not valid'})
     }
 }
 

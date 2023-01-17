@@ -19,7 +19,7 @@ class AuthController {
         // }catch (err){
         //     res.status(500).json(err)
         // }
-        const {username, email, IsAdmin, ProfilePic, password} = req.body
+        const {username, email, IsAdmin, password} = req.body
         if (!email || !password) {
             return res.status(500).json({message: 'Enter email or password'})
         }
@@ -28,10 +28,10 @@ class AuthController {
             return res.status(500).json({message: 'user already exists'})
         }
         const hashPassword = await bcrypt.hash(password, 5)
-        const user = await User.create({username, email, IsAdmin, ProfilePic, password: hashPassword})
+        const user = await User.create({username, email, IsAdmin, password: hashPassword})
         await user.save();
         const aToken = await jwt.sign(
-            { id: user.id, username: user.username, email: user.email, isAdmin: user.IsAdmin, profilePic: user.ProfilePic },
+            { id: user.id, username: user.username, email: user.email, isAdmin: user.IsAdmin },
             process.env.SECRET_KEY,
             { expiresIn: '24h' }
         )
@@ -56,7 +56,7 @@ class AuthController {
         // } catch (e) {
         //     res.status(400).json({message: 'Something went wrong...'})
         // }
-        const {username, email, password} = req.body
+        const {email, password} = req.body
         console.log(email)
         const user = await User.findOne({where: {email}})
         if (!user) {
@@ -64,10 +64,10 @@ class AuthController {
         }
         let comparePassword = bcrypt.compareSync(password, user.password)
         if (!comparePassword) {
-            return res.status(500).json({message: 'password is incorrect'})
+            return res.status(400).json({message: 'password is incorrect'})
         }
         const aToken = await jwt.sign(
-            { id: user.id, username: user.username, email: user.email, isAdmin: user.isAdmin },
+            { id: user.id, username: user.username, email: user.email, isAdmin: user.IsAdmin },
             process.env.SECRET_KEY,
             { expiresIn: '24h' }
         )

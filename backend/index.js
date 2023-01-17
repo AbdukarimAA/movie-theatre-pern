@@ -5,18 +5,20 @@ const models = require('./models/models');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const path = require('path')
-
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/images", express.static(path.join(__dirname, "images")));
+
 app.use(express.static(path.resolve(__dirname, 'files', 'filmVideo')));
 app.use(express.static(path.resolve(__dirname, 'files', 'trailer')));
 app.use(express.static(path.resolve(__dirname, 'files', 'image')));
 app.use(express.static(path.resolve(__dirname, 'files', 'imageTitle')));
 app.use(express.static(path.resolve(__dirname, 'files', 'imageSmall')));
 app.use(fileUpload({}));
+
 
 app.use('/api/auth', require('./routes/auth.router'));
 app.use('/api/user', require('./routes/user.router'));
@@ -31,11 +33,11 @@ app.use('/api/typeMovie', require('./routes/typeMovie.router'));
 const start = async () => {
   try{
     await sequelize.authenticate(); // connect to db
-    await sequelize.sync(); //сверяет состояние бд со схемой бд
+    await sequelize.sync(/*{force: true}*/); //сверяет состояние бд со схемой бд
     app.listen(PORT, (req, res) => {console.log('server has started', {PORT})}
     )
   } catch (e){
-      console.log('something went wrong', e)
+    console.log('Something went wrong', e)
   }
 };
 

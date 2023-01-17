@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = function(role) {
+module.exports = function(isAdmin) {
     return function(req, res, next) {
         if (req.method === 'OPTIONS') {
             return next()
@@ -11,7 +11,7 @@ module.exports = function(role) {
                 return res.status(401).json({message: 'Нет авторизации'})
             }
             const decoded = jwt.verify(token, process.env.SECRET_KEY)
-            if(decoded.role !== role) {
+            if(decoded.isAdmin !== isAdmin) {
                 return res.status(403).json({message: 'No access'})
             }
             req.user = decoded //Создаем любое поле, куда сохраняем токен.

@@ -1,6 +1,36 @@
 import './login.scss'
+import {useDispatch} from "react-redux";
+import {useState} from "react";
+import {unwrapResult} from "@reduxjs/toolkit";
+import {userLogin} from "../../service/redux/slices/UserSlice";
+import {Link} from "react-router-dom";
 
 export const Login = () => {
+
+    const dispatch = useDispatch();
+
+    const [form, setForm] = useState({
+        email: '',
+        password: ''
+    })
+
+    const changeHandler = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const loginHandler = async () => {
+        try {
+            const resAction = await dispatch(userLogin({email: form.email, password: form.password}))
+            unwrapResult(resAction)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+
     return(
         <div className='login' style={{background: 'url(https://i.amediateka.tech/trim/%7BSIZE%7D/_stor_/cms/assets-dummyasset/f/71/93b885adfe0da089cdf634904fd59f71-1-d77d60a8c40e47ff929b03a5941b993f.png)'}}>
             <div className="top">
@@ -10,10 +40,23 @@ export const Login = () => {
                     <span className='title'>Вход в аккаунт</span>
                     <span className='title2'>Войдите для доступа к подписке и списку избранного</span>
                     <div className="input">
-                        <input className='email' type='email' placeholder='Email' autoComplete='off'/>
-                        <input className='email' type="password" placeholder='Password' autoComplete='off'/>
+                        <input className='email'
+                               onChange={changeHandler}
+                               name='email'
+                               value={form.email}
+                               placeholder='Почта'
+                        />
+                        <input className='email'
+                               onChange={changeHandler}
+                               name='password'
+                               value={form.password}
+                               placeholder='Пароль'
+                               type='password'
+                        />
                         <span>Забыли пароль?</span>
-                        <button className='but'>Войти</button>
+                        <Link to={'/main'}>
+                            <button className='but' onClick={loginHandler}>Войти</button>
+                        </Link>
                         <span className='net'>Или войдите с помощью социальных сетей</span>
                         <div className="ic">
                             <img className='icons' src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNjBweCIgaGVpZ2h0PSI2MHB4IiB2aWV3Qm94PSIwIDAgNjAgNjAiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDUyLjUgKDY3NDY5KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT4tU3ltYm9scy9JY29ucy9Tb2NpYWwvVksvMTQ0MC9Ob3JtYWw8L3RpdGxlPgogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+CiAgICA8ZyBpZD0iQWN0aXZhdGUiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJBY3RpdmF0ZS1UVi1VbmF1dGhvcml6ZWQtU2lnbi1Jbi1FbWFpbC0xOTIwIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtODQ1LjAwMDAwMCwgLTczOS4wMDAwMDApIj4KICAgICAgICAgICAgPGcgaWQ9IkZvcm0iIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcyMC4wMDAwMDAsIDM2MC4wMDAwMDApIj4KICAgICAgICAgICAgICAgIDxnIGlkPSJTb2NpYWwiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQwLjAwMDAwMCwgMzQxLjAwMDAwMCkiPgogICAgICAgICAgICAgICAgICAgIDxnIGlkPSItU3ltYm9scy9JY29ucy9Tb2NpYWwvVksvMTQ0MC9Ob3JtYWwiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDg1LjAwMDAwMCwgMzguMDAwMDAwKSI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxjaXJjbGUgaWQ9Ik92YWwiIGZpbGw9IiM1NjVDNjciIGZpbGwtcnVsZT0ibm9uemVybyIgb3BhY2l0eT0iMC40MDAwMDAwMDYiIGN4PSIzMCIgY3k9IjMwIiByPSIzMCI+PC9jaXJjbGU+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik00MC45MDU3MiwzMS44MDYyNTU0IEM0MC45MDU3MiwzMS44MDYyNTU0IDQ1LjY0OTE3LDI1LjQ1NzUzODggNDYuMTIwNTIzNiwyMy4zNzEwOTA4IEM0Ni4yNzc1NTU0LDIyLjYyNTk4NDYgNDUuOTMyMDA5NywyMi4yMDg0OTQyIDQ1LjExNTEwNjIsMjIuMjA4NDk0MiBMNDEuMDAwMDQzNywyMi4yMDg0OTQyIEM0MC4wNTc1OTY4LDIyLjIwODQ5NDIgMzkuNzEyMDUxMSwyMi41OTU5ODQ2IDM5LjQyOTM0NDgsMjMuMTYyMzQ1NiBDMzkuNDI5MzQ0OCwyMy4xNjIzNDU2IDM3LjIwNDQ2MjUsMjcuNjYwNDcyNSAzNC40OTczNzg4LDMwLjQ5NDkxMzkgQzMzLjYyODM1NDcsMzEuNDExMjMzMyAzMy4xODY1MDExLDMxLjY4NzAwNzggMzIuNzA2ODEwNywzMS42ODcwMDc4IEMzMi4zMTk4NTkyLDMxLjY4NzAwNzggMzIuMTQxMzk3OSwzMS4zODA5ODI1IDMyLjE0MTM5NzksMzAuNTU0NDExOCBMMzIuMTQxMzk3OSwyMy4zMTE0NjcyIEMzMi4xNDEzOTc5LDIyLjI5ODExNzggMzIuMDE1NzE5MiwyMiAzMS4xMzYyNDQ5LDIyIEwyNC41MzkzODk2LDIyIEMyNC4wMzY2ODEsMjIgMjMuNzIyNDg4MywyMi4yNzcyODA5IDIzLjcyMjQ4ODMsMjIuNjU1NjA4MSBDMjMuNzIyNDg4MywyMy42MDk5NjE2IDI1LjI2MTgzNDEsMjMuODI1NDg1MSAyNS4yNjE4MzQxLDI2LjQxMTI2NDkgTDI1LjI2MTgzNDEsMzEuNzQ2NjMyMSBDMjUuMjYxODM0MSwzMi44MTk3MzAxIDI1LjE5ODk5NTgsMzMuMjM2OTcwMSAyNC42NjQ5MzQsMzMuMjM2OTcwMSBDMjMuMjUxMzk4MSwzMy4yMzY5NzAxIDE5Ljg5MDEzMTEsMjguNjE3MDg1MyAxOC4wMDUzNzIxLDIzLjM3MTA5MDggQzE3LjYyODM0MTEsMjIuMjk4MTE3OCAxNy4yMTk5NTY1LDIyIDE2LjE1MTgzNCwyMiBMMTIuMDM2NzY5NywyMiBDMTEuNDM5ODY5OCwyMiAxMSwyMi4zODczNjQ4IDExLDIyLjk1MzYwMDQgQzExLDIzLjk5NjgyNDMgMTIuMjg3OTkxNiwyOC44MjU1NzkzIDE3LjM0NTYzMzcsMzUuMjkzNjY4NCBDMjAuNzM4MjUzMywzOS42NDUzMTA0IDI1LjE5ODk5NTgsNDIgMjkuMjE5ODY5MSw0MiBDMzEuNjcwMTczNSw0MiAzMi4yNjcwNzQ1LDQxLjYxMjYzNTQgMzIuMjY3MDc0NSw0MC42Mjg5MTA2IEwzMi4yNjcwNzQ1LDM3LjI5MDYxODggQzMyLjI2NzA3NDUsMzYuNDU2MDE0MiAzMi42MTI2MjAzLDM2LjA5ODM5ODUgMzMuMTE1MTk1OCwzNi4wOTgzOTg1IEMzMy42ODA2MTA2LDM2LjA5ODM5ODUgMzQuNjc4NjE5NiwzNi4yNzA3NDIxIDM3LjAxMDUyNDUsMzguNDUzMDkwMSBDMzkuNzc0ODkwNCw0MC45NTY5MDE4IDM5Ljk2MzQwNjQsNDIgNDEuNDcxMzk5Myw0MiBMNDYuMDg5MDM3NCw0MiBDNDYuNTYwMjYxNyw0MiA0Nyw0MS43OTEzODE5IDQ3LDQxLjA0NjI3NTEgQzQ3LDQwLjA2MjU0ODQgNDUuNjQ5MTcsMzguMzA0MDk0NCA0My41NzU4OTM2LDM2LjIxNzUxOTcgQzQyLjcyNzc3MjMsMzUuMTQ0NTQ3MiA0MS4zNDU1ODk0LDMzLjk4MjIwMTQgNDAuOTA1NzIsMzMuNDQ1NzE0NyBDNDAuMjc3NTk5MSwzMi44MTk3MzAxIDQwLjQ2NTk4MTksMzIuNDYxODYzNSA0MC45MDU3MiwzMS44MDYyNTU0IiBpZD0iVksiIGZpbGw9IiNGRkZGRkYiIGZpbGwtcnVsZT0iZXZlbm9kZCI+PC9wYXRoPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+" alt=""/>
@@ -24,12 +67,12 @@ export const Login = () => {
                     </div>
                 </div>
                 <div className="log">
-              <span>
-                  Уже зарегистрированы?
-                  <a href="a">
-                        Войдите в аккаунт
-                  </a>
-              </span>
+                  <span>
+                      Всё ещё нет аккаунта?
+                      <Link to={'/register'}>
+                            Зарегистрируйтесь
+                      </Link>
+                  </span>
                 </div>
             </div>
         </div>

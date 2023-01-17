@@ -1,15 +1,35 @@
 import './player.scss';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
+import {useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 
 export const Player = () => {
-  return(
-      <div className='player'>
-          <div className='back'>
-              <ChevronLeftOutlinedIcon />
-              Home
-          </div>
-          <video className='video' autoPlay progress controls src="https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c0fd273d2c6d9a064f3ae35579b2bbdf&profile_id=139&oauth2_token_id=57447761" />
-      </div>
-  );
+    const[film, setFilm] = useState();
+    const {id} = useParams();
+    console.log(id)
+
+    useEffect(() => {
+        const fetchFilm = async () => {
+            const res = await axios.get(`http://localhost:5000/api/movie/getOneMovie/${id}`, {
+                headers: {
+                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsInVzZXJuYW1lIjoiS2FyaW0gQUFBIiwiZW1haWwiOiJLYXJpbWNoaWtAZ21haWwuY29tIiwiaXNBZG1pbiI6IkFETUlOIiwiaWF0IjoxNjcyMzA2Nzk0LCJleHAiOjE2NzIzOTMxOTR9.taKUh7rj4PG2KcoVh6aznQn1KugiINHL7_X1eclBtA8`
+                }
+            })
+            setFilm(res.data)
+            console.log(res.data)
+        }
+        fetchFilm();
+    }, [])
+
+    return(
+        <div className='player'>
+            <div className='back'>
+                <ChevronLeftOutlinedIcon />
+                Home
+            </div>
+            <video className='video' autoPlay controls src={`http://localhost:5000/${film?.video}`} />
+        </div>
+    );
 }

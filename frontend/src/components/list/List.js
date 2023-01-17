@@ -2,54 +2,43 @@ import './list.scss';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {ListItem} from "../listItem/ListItem";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
+import axios from "axios";
+import {Link} from "react-router-dom";
 
 export const List = () => {
-    const [isMoved, setIsMoved] = useState(false);
-    const [isSlider, setIsSlider] = useState(0);
+    const [movies, setMovies] = useState([]);
+
     const ref = useRef();
-    const handleClick = (direction) => {
-        setIsMoved(true);
-        let dist = ref.current.getBoundingClientRect().x - 50;
 
-        if(direction === 'left' && isSlider > 0) {
-            setIsSlider(isSlider - 1)
-            ref.current.style.transform = `translateX(${280 + dist}px)`
+    useEffect(() => {
+        const fetchFilms = async () => {
+            const res = await axios.get('http://localhost:5000/api/movie/getAllMovies', {
+                headers: {
+                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsInVzZXJuYW1lIjoiS2FyaW0gQUFBIiwiZW1haWwiOiJLYXJpbWNoaWtAZ21haWwuY29tIiwiaXNBZG1pbiI6IkFETUlOIiwiaWF0IjoxNjcyMzA2Nzk0LCJleHAiOjE2NzIzOTMxOTR9.taKUh7rj4PG2KcoVh6aznQn1KugiINHL7_X1eclBtA8`
+                }
+            })
+            console.log(res)
+            setMovies(res.data?.rows)
         }
 
-        if(direction === 'right' && isSlider < 5) {
-            setIsSlider(isSlider + 1)
-            ref.current.style.transform = `translateX(${-280 + dist}px)`
-        }
-    };
+        fetchFilms()
 
-  return (
-      <div className='list'>
-          <span className='listTitle'>
-              Вам также понравится
-          </span>
-          <div className="wrapper">
-                <ArrowBackIosNewIcon
-                    className='arrowIcon left'
-                    onClick={() => handleClick('left')}
-                    style={{display: !isMoved && 'none'}}
-                />
-                <div className="container" ref={ref}>
-                    <ListItem index={0}/>
-                    <ListItem index={1}/>
-                    <ListItem index={2}/>
-                    <ListItem index={3}/>
-                    <ListItem index={4}/>
-                    <ListItem index={5}/>
-                    <ListItem index={6}/>
-                    <ListItem index={7}/>
-                    <ListItem index={8}/>
-                    <ListItem index={9}/>
-                    <ListItem index={10}/>
-                    <ListItem index={11}/>
-                </div>
-                <ArrowForwardIosIcon className='arrowIcon right' onClick={() => handleClick('right')} />
-          </div>
-      </div>
-  );
+    }, [])
+
+
+    return (
+        <div className='list'>
+            <span className='listTitle'> Вам также понравится </span>
+            <div className="container" ref={ref}>
+                {
+                    movies.map((movie) => (
+                        <Link to={`/film/${movie.id}`}>
+                            <ListItem {...movie}/>
+                        </Link>
+                    ))
+                }
+            </div>
+        </div>
+    )
 }

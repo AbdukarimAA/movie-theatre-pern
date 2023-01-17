@@ -4,18 +4,36 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import {Link} from "react-router-dom";
 
 
 export const MainSlider = () => {
+    const [movies, setMovies] = useState([]);
+
+
+    useEffect(() => {
+        const fetchFilms = async () => {
+            const res = await axios.get('http://localhost:5000/api/movie/getAllMovies', {
+                headers: {
+                    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsInVzZXJuYW1lIjoiS2FyaW0gQUFBIiwiZW1haWwiOiJLYXJpbWNoaWtAZ21haWwuY29tIiwiaXNBZG1pbiI6IkFETUlOIiwiaWF0IjoxNjcyMzA2Nzk0LCJleHAiOjE2NzIzOTMxOTR9.taKUh7rj4PG2KcoVh6aznQn1KugiINHL7_X1eclBtA8`
+                }
+            })
+            console.log(res)
+            setMovies(res.data?.rows)
+        }
+
+        fetchFilms()
+
+    }, [])
 
     function SampleNextArrow(props) {
         const { className, style, onClick } = props;
         return (
             <div
                 className={className}
-                style={{ ...style, display: "block", width: "50"}}
+                style={{ ...style, display: "block", width: "50px", height: '50px'}}
                 onClick={onClick}
             />
         );
@@ -50,32 +68,36 @@ export const MainSlider = () => {
     return (
         <div className='app'>
             <Slider {...settings}>
-                <div className="card">
-                    <img src="http://avatars.mds.yandex.net/get-ott/1652588/2a0000016fb27b97beee97f93c92540dd577/orig"className='img' alt="AVA"/>
-                </div>
-                <div className="card">
-                    <img src="http://avatars.mds.yandex.net/get-ott/1652588/2a0000016fb27b97beee97f93c92540dd577/orig"className='img' alt="AVA"/>
-                    <span className='description'>
-                  Star Wars: Episode III - Revenge of the Sith
-            </span>
-                </div>
+                {
+                    movies.map((movie) => (
+                        <Link to={`/film/${movie.id}`}>
+                            <div className="card">
+                                <img src={`http://localhost:5000/${movie.img}`} className='img' alt="AVA"/>
+                                <div className="info_2">
+                                    <img className='im' src={`http://localhost:5000/${movie.imgTitle}`} alt="AVA"/>
+                                    <span className='description'>
+                                        {movie.title}
+                                    </span>
+                                    <div className="buttons">
+                                        <Link to={`/player/${movie?.id}`}>
+                                            <button className="play_2">
+                                                <PlayArrowIcon />
+                                                <span>Смотреть</span>
+                                            </button>
+                                        </Link>
+                                        <Link to={`/film/${movie?.id}`}>
+                                            <button className="infoFilm">
+                                                <InfoOutlinedIcon />
+                                                <span>Узнать больше о фильме</span>
+                                            </button>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+                    ))
+                }
             </Slider>
-            <div className="info">
-                <img className='im' src='https://i.amediateka.tech/trim/640x320/_stor_/cms/content-contentasset/d/c9/ca5d14f1728f86b5810a2afe682ecdc9-123178-7fbeae28ff3b40df8831a459dae7e0e3.png' alt="AVA"/>
-                <span className='description'>
-                  Star Wars: Episode III - Revenge of the Sith
-            </span>
-                <div className="buttons">
-                    <button className="play">
-                        <PlayArrowIcon />
-                        <span>Смотреть</span>
-                    </button>
-                    <button className="infoFilm">
-                        <InfoOutlinedIcon />
-                        <span>Узнать больше о фильме</span>
-                    </button>
-                </div>
-            </div>
             <div className="linear1"></div>
         </div>
     );

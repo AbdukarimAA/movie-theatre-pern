@@ -6,8 +6,8 @@ const User = sequelize.define('user', {
     username: {type: DataTypes.STRING, unique: true},
     email: {type: DataTypes.STRING, unique: true},
     password: {type: DataTypes.STRING},
-    ProfilePic: {type: DataTypes.STRING},
-    IsAdmin: {type: DataTypes.BOOLEAN, defaultValue: false},
+    // ProfilePic: {type: DataTypes.STRING},
+    IsAdmin: {type: DataTypes.STRING, defaultValue: 'USER'},
 });
 
 const Comment = sequelize.define('comment', {
@@ -18,7 +18,7 @@ const Comment = sequelize.define('comment', {
 const Movie = sequelize.define('movie', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     title: {type: DataTypes.STRING, unique: true, allowNull: false, required: true},
-    desc: {type: DataTypes.STRING, unique: true, allowNull: false},
+    desc: {type: DataTypes.STRING(2048), unique: true, allowNull: false},
     director: {type: DataTypes.STRING, allowNull: false},
     country: {type: DataTypes.STRING, allowNull: false},
     img: {type: DataTypes.STRING, allowNull: false},
@@ -127,5 +127,6 @@ module.exports = {
     FilmCompany,
     MovieInfo,
     Actor,
-    TypeMovieInfo
+    TypeMovieInfo,
+    ListInfo
 };

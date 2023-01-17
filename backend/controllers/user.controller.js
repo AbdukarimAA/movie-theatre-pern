@@ -4,6 +4,7 @@ const {User} = require("../models/models");
 
 class UserController {
     async update(req, res) {
+        if(req.user.IsAdmin === 'ADMIN') {
             try {
                 const { id } = req.params;
                 const { username, email, IsAdmin, ProfilePic } = req.body;
@@ -26,7 +27,6 @@ class UserController {
                 const update = await findPersonById.update(req.body, {
                     where: {
                         id: req.params.id,
-
                     }
                 })
                 const updatePerson = await update.save();
@@ -41,78 +41,11 @@ class UserController {
                     data: updatePerson
                 });
             } catch (err) {
-                return res.status(500).json(err, 'something went wrong')
+                return res.status(500).json({err: "something went wrong with user updating"})
             }
-            /*
-            try {
-                    if(req.body.password) {
-                        req.body.password = bcrypt.hash(req.body.password, 6)
-                    }
-                        const {id} = req.user
-                        const us = await User.findByPk(id);
-                        const updateUser = await User.update(
-                            {
-                                username: req.body,
-                            },
-                            {
-                                where: { id: us },
-                            });
-                        return res.status(200).json(...updateUser)
-                }catch(err) {
-                    res.status(500).json(err)
-                }
-                --------------------------------------------------------------------------
-                const userId = req.params.id;
-                const { email, username } = req.body;
-                console.log(User.rawAttributes.username)
-                if (!email && !username) {
-                    res.json('Something went wrong');
-                } else {
-
-                }
-                --------------------------------------------------------------------------
-                const {id} = req.params
-                if (!id)
-                    return res.status(422).send({ message: "Missing User id in parameters" });`checking in db too`;
-                const us = await User.findByPk(id);
-
-                if (us.length === 0) {
-                    return res.status(422).send({ message: "User id not exist" });
-                }else {
-                    const a = await User.update(
-                        {username: req.body.username},
-                        {where: {id: req.params.id}})
-                        return res.status(201).send({ message: "User updated successfully", a})
-                }
-
-                return res.status(201).send({ message: "User updated successfully", user})
-                --------------------------------------------------------------------------
-                try {
-                    const { id } = req.params;
-                    const { username, email } = req.body;
-                    const findUserById = await User.findOne({
-                        where: {
-                            id
-                        }
-                    });
-                    if (!findUserById) {
-                        res.status(404).json({
-                            status: 'error',
-                            message: `Person with id ${id} not found`
-                        });
-                    }
-                    if (email) findUserById.email = email;
-                    if (username) findUserById.username = username;
-
-                    const updateUser = await findUserById.save();
-                    if (!updateUser) {
-                        res.status(400).json({
-                            status: 'error',
-                            message: `data person with id ${id} failed update`
-                        });
-                    }
-                    return res.status(201).send({ message: "User updated successfully", updateUser})
-               */
+        }else {
+            return res.status(500).json({message: 'you are not allowed!'})
+        }
     }
 
     async remove(req, res) {
@@ -130,7 +63,7 @@ class UserController {
             }
             return res.status(201).send({ message: "User deleted successfully" });
         }catch (err) {
-            res.status(500).json(err)
+            res.status(500).json({err: "something went wrong with user removing"})
         }
 
         // try {
